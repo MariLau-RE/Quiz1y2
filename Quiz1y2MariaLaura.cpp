@@ -5,34 +5,40 @@ class Noticia {
    public:
     Noticia() //Si los valores ingresados son vacíos se llama a este constructor
     {
+       tipo=0;	
        titulo = "";
        fecha = "";
        reportero="";
-       siguiente = NULL;
-       anterior =NULL;
+
     }
 
-   Noticia(string  t, string f, string r) //De insertar un titulo y autor se utilizará  este constructor
+   Noticia(int n, string  t, string f, string r) //De insertar un titulo y autor se utilizará  este constructor
     {
+       tipo= n;
        titulo = t;
        fecha= f;
        reportero = r;
-       siguiente = NULL;
-       anterior =NULL;
+
     }
 
-
+	int tipo;
     string titulo;
     string fecha;
     string reportero;
-    Noticia *siguiente;
-    Noticia *anterior;
+
     
+void getinfo(){
 
+	cout<<"Titulo: "<<titulo<<endl;
+	cout<<"Fecha: "<<fecha<<endl;
+	cout<<"Reportero: "<<reportero<<endl;
+
+}
 };
-typedef Noticia *pNoticia;
 
-class NoticiaPaper {
+
+class NoticiaPaper: public Noticia {
+	
    public:
     NoticiaPaper() //Si los valores ingresados son vacíos se llama a este constructor
     {
@@ -40,8 +46,6 @@ class NoticiaPaper {
        fecha = "";
        reportero="";
        ruta="";
-       siguiente = NULL;
-       anterior =NULL;
     }
 
    NoticiaPaper(string  t, string f, string r, string Ruta ) //De insertar un titulo y autor se utilizará  este constructor
@@ -50,41 +54,32 @@ class NoticiaPaper {
        fecha= f;
        reportero = r;
        ruta= Ruta;
-       siguiente = NULL;
-       anterior =NULL;
-    }
 
+    }
 
    	string titulo;
     string fecha;
     string reportero;
     string ruta;
-    NoticiaPaper *siguiente;
-    NoticiaPaper *anterior;
     
-void showinfoP(){
+void getinfo(){
 
-	cout<<"Titulo: "<<titulo;
-	cout<<"Fecha: "<<fecha;
-	cout<<"Reportero: "<<reportero;
+
 	cout<<"Ruta: "<<ruta;
 }
-    
-        
-   friend class Noticia;
 };
-typedef NoticiaPaper *pNoticiaP;
 
-class NoticiaDigital {
+
+
+
+class NoticiaDigital: public Noticia {
    public:
     NoticiaDigital() //Si los valores ingresados son vacíos se llama a este constructor
     {
        titulo = "";
        fecha = "";
        reportero="";
-       media=0;
-       siguiente = NULL;
-       anterior =NULL;
+       //media=0;
     }
 
    NoticiaDigital(string  t, string f, string r, int m ) //De insertar un titulo y autor se utilizará  este constructor
@@ -93,33 +88,24 @@ class NoticiaDigital {
        fecha= f;
        reportero = r;
        media=m;
-       siguiente = NULL;
-       anterior =NULL;
     }
-
 
    	string titulo;
     string fecha;
     string reportero;
 	int media;
-    NoticiaDigital *siguiente;
-    NoticiaDigital *anterior;
 
-void showinfoD(){
 
-	cout<<"Titulo: "<<titulo;
-	cout<<"Fecha: "<<fecha;
-	cout<<"Reportero: "<<reportero;
+void getinfo(){
+
 	cout<<"Media: "<<media;
 }
 
-   friend class Noticia;
    friend class Media;
 };
-typedef NoticiaDigital *pNoticiaD;
 
 
-class NoticiaRadio {
+class NoticiaRadio: public Noticia {
    public:
     NoticiaRadio() //Si los valores ingresados son vacíos se llama a este constructor
     {
@@ -127,8 +113,7 @@ class NoticiaRadio {
        fecha = "";
        reportero="";
        audio="";
-       siguiente = NULL;
-       anterior =NULL;
+
     }
 
    NoticiaRadio(string  t, string f, string r, string a ) //De insertar un titulo y autor se utilizará  este constructor
@@ -137,31 +122,25 @@ class NoticiaRadio {
        fecha= f;
        reportero = r;
        audio= a;
-       siguiente = NULL;
-       anterior =NULL;
-    }
 
+    }
 
    	string titulo;
     string fecha;
     string reportero;
     string audio;
-    NoticiaRadio *siguiente;
-    NoticiaRadio *anterior;
 
-void showinfoR(){
 
-	cout<<"Titulo: "<<titulo;
-	cout<<"Fecha: "<<fecha;
-	cout<<"Reportero: "<<reportero;
+void getinfo(){
+
+
 	cout<<"URL: "<<audio;
 }
         
-   friend class Noticia;
 };
-typedef NoticiaRadio *pNoticiaR;
 
-class Media {
+class Media//: public NoticiaDigital 
+{
    public:
     Media() //Si los valores ingresados son vacíos se llama a este constructor
     {
@@ -169,8 +148,6 @@ class Media {
 	   NombreTipo = "";
        info = "";
        rutamedia="";
-       siguiente = NULL;
-       anterior =NULL;
     }
 
    Media(int codigo, string n, string i, string rm) //De insertar un titulo y autor se utilizará  este constructor
@@ -179,8 +156,6 @@ class Media {
 	   NombreTipo= n;
        info = i;
        rutamedia= rm;
-       siguiente = NULL;
-       anterior =NULL;
     }
 
 
@@ -188,24 +163,36 @@ class Media {
     string NombreTipo;
     string info;
     string rutamedia;
-    Noticia *siguiente;
-    Noticia *anterior;
 
-void showinfoM(){
 
-	cout<<"Media: "<<codmedia;
-	cout<<"Fecha: "<<NombreTipo;
-	cout<<"Reportero: "<<info;
+void getinfo(){
+
+	//cout<<"Media: "<<codmedia;
+	cout<<"Tipo: "<<NombreTipo;
+	cout<<"info: "<<info;
 	cout<<"Ruta: "<<rutamedia;
-}
-        
+}       
 };
-typedef Media *pMedia;
 
 
-int main()
-{
+
+int main(int argc, char**argv){
+	
+   Noticia* tipo[3];
+   Media* codmedia[3];
    
-
+   NoticiaPaper v1("Zelenski celebra haber complicado los planes perfidos de rusia","02/03/2022","Agencia","https://www.crhoy.com/wp-content/uploads/2022/02/Zelenski.jpg");
+   //NoticiaDigital v2("COVID-19: ultimas horas dejaron menos de 2 mil casos","02/03/2022","Jason Urena","");
+   //NoticiaRadio v3("Preste atencion:Pasaporte le saldra mas caro por ser biometrico","02/03/2022","Erick Murillo",);
+   tipo[0]=&v1;
+   //tipo[1]=&v2;
+   //tipo[2]=&v3;
+   
+   
+   for (int i=0; i<3; i++){
+   	tipo[i]->getinfo();
+   	cout<<endl<<endl<<endl;
+	   }
+   
    return 0;
 }
